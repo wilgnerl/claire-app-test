@@ -194,7 +194,7 @@ export async function getServerSideProps(context: any) {
       })
     })
 
-    console.log(responseData[0]?.documents?.asset?._ref.split('-')[1])
+    // console.log(responseData[0]?.documents?.asset?._ref.split('-')[1])
 
     const result = Object.values(transformedData)
 

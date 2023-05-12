@@ -16,8 +16,8 @@ export default async function handler(
 
     try {
       res.status(200).json(companies)
-    } catch (err) {
-      console.log(err)
+    } catch (err: any) {
+      console.error(err.message)
       res.status(500).json({ ok: true })
     }
   } else {

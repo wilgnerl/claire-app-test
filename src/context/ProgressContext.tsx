@@ -36,7 +36,7 @@ export function ProgressContextProvider({
 
       if (session) {
         const response = await api.get(
-          `/api/progress/list?id=${session?.user.id}`,
+          `api/progress/list?id=${session?.user.id}`,
           {
             headers: {
               'Content-Type': 'application/json',
