@@ -113,7 +113,7 @@ export default function Home({ ids }: any) {
                         backgroundColor: 'orange.600',
                       }}
                     >
-                      <Link href="/auth/signup">Crie sua conta</Link>
+                      <Link href="/signup">Crie sua conta</Link>
                     </Button>
                   </Stack>
                 </form>
