@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model User {
@@ -19,6 +20,8 @@ model User {
   name          String?
   role          String?
   progressTasks ProgressTask[]
+
+  @@index([companyId])
 }
 
 model Company {
@@ -34,4 +37,6 @@ model ProgressTask {
   userId     String
   checkBoxId String
   finished   Boolean
+
+  @@index([userId])
 }
