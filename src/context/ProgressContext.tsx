@@ -47,8 +47,8 @@ export function ProgressContextProvider({
 
         setTasks(response.data)
       }
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      console.error(error.message)
     }
   }
 

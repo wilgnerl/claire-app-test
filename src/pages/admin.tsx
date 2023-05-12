@@ -46,8 +46,8 @@ export default function Admin({ session }: any) {
           method: 'GET',
         })
         setCompaniesList(result.data)
-      } catch (error) {
-        console.log(error)
+      } catch (error: any) {
+        console.error(error.message)
         setCompaniesList([])
       }
     }
