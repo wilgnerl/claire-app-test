@@ -43,7 +43,7 @@ export default function Day({ content, contents, session }: any) {
 
   return (
     <>
-      <Header onOpen={onOpen} />
+      <Header onOpen={onOpen} session={session} />
       <DrawerItem isOpen={isOpen} onClose={onClose} contents={contents} />
       <Flex width="80%" direction="column" p="12" mx="auto">
         {content[0].WeekInfo.map((data: any) => {

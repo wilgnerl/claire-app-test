@@ -26,7 +26,7 @@ export default async function handler(
     try {
       res.status(200).json(createCompany)
     } catch (err) {
-      console.log(err)
+      console.error(err)
       res.status(500).json({ erro: true })
     }
   } else {

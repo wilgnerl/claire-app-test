@@ -1,7 +1,6 @@
 import { PasswordField } from '@/components/PasswordField'
 import { api } from '@/lib/axios'
 import {
-  Box,
   Button,
   Card,
   CardBody,
@@ -10,11 +9,11 @@ import {
   FormControl,
   FormLabel,
   Heading,
-  HStack,
   Input,
   Select,
   Stack,
   Text,
+  VStack,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
@@ -62,24 +61,22 @@ export default function SignUp({ companies }: AdminProps) {
 
   return (
     <Flex
-      bgColor="orange.200"
+      bgColor="orange.300"
       w="100wh"
       height="100vh"
       justify="center"
       gap="8"
     >
       <Center>
-        <HStack spacing={8} bgColor="orange.400" p="20" borderRadius="8">
-          <Box>
-            <Stack spacing="2">
-              <Heading fontSize="3xl" color="white">
-                Bem vindo a Claire
-              </Heading>
-              <Text fontSize="xl" color="white" fontWeight="bold">
-                Crie sua conta
-              </Text>
-            </Stack>
-          </Box>
+        <VStack spacing={8} bgColor="orange.400" p="20" borderRadius="8">
+          <Flex direction="column" align="center" w="100%">
+            <Heading fontSize="2xl" color="white">
+              Bem vindo a Claire
+            </Heading>
+            <Text fontSize="xl" color="white" fontWeight="bold">
+              Crie sua conta
+            </Text>
+          </Flex>
 
           <Card bgColor="white" align="center">
             <CardBody w="sm">
@@ -145,7 +142,7 @@ export default function SignUp({ companies }: AdminProps) {
               </form>
             </CardBody>
           </Card>
-        </HStack>
+        </VStack>
       </Center>
     </Flex>
   )

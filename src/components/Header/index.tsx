@@ -1,4 +1,4 @@
-import { Flex, Heading, Container, Text } from '@chakra-ui/react'
+import { Flex, Heading, Container, Text, Button } from '@chakra-ui/react'
 import React from 'react'
 import Link from 'next/link'
 import IconButtonHeader from '../IconButtonHeader'
@@ -7,9 +7,11 @@ import LogoutButton from '../Auth'
 interface HeaderProps {
   content?: any
   onOpen: any
+  session: any
 }
 
-export default function Header({ onOpen }: HeaderProps) {
+export default function Header({ onOpen, session }: HeaderProps) {
+  const userRole = session.user.role
   return (
     <>
       <Flex
@@ -30,8 +32,24 @@ export default function Header({ onOpen }: HeaderProps) {
             </Container>
           </Link>
         </Flex>
-
-        <LogoutButton />
+        <Flex flexDirection="column">
+          <LogoutButton />
+          {userRole === 'admin' ? (
+            <Button
+              mt="5"
+              bgColor="orange.300"
+              _hover={{
+                backgroundColor: 'orange.400',
+              }}
+              color="white"
+              w="3xs"
+            >
+              <Link href="/admin">Admin Page</Link>
+            </Button>
+          ) : (
+            ''
+          )}
+        </Flex>
       </Flex>
     </>
   )

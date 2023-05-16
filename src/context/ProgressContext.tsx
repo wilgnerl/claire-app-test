@@ -7,6 +7,7 @@ interface ProgressType {
   userId: string
   checkBoxId: string
   finished: boolean
+  createdAt: string
 }
 
 interface ProgressTypeNew {

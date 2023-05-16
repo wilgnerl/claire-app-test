@@ -1,69 +1,128 @@
 import {
   Heading,
-  Center,
   Text,
   useDisclosure,
-  Button,
   Flex,
+  Box,
+  Button,
 } from '@chakra-ui/react'
-import Image from 'next/image'
-import imageUrl from '../assets/logo.jpg'
 import { cms } from '@/lib/cms'
 import { getSession } from 'next-auth/react'
 import Header from '@/components/Header'
 import DrawerItem from '@/components/DrawerItem'
+import { useContext } from 'react'
+import { ProgressContext } from '@/context/ProgressContext'
+import { parseISO, isAfter } from 'date-fns'
+import { api } from '@/lib/axios'
 import Link from 'next/link'
 
-export default function Main({ contents, session }: any) {
+export default function Main({
+  contents,
+  session,
+  recentTaskData,
+  recentTask,
+}: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const userRole = session.user.role
+  const { tasks } = useContext(ProgressContext)
+  let lastTasksFinished = ''
+  if (tasks.length > 0) {
+    lastTasksFinished = recentTaskData[0].WeekInfo[0].children[0].text
+  }
 
   return (
-    <>
-      <Header onOpen={onOpen} />
+    <Box width="100wh" height="100vh" bgColor="orange.300">
+      <Header onOpen={onOpen} session={session} />
       <DrawerItem isOpen={isOpen} onClose={onClose} contents={contents} />
-      <Flex width="100%" direction="column">
-        <Center>
-          <Image src={imageUrl} alt="" width={600} height={200} />
-        </Center>
-        <Heading textAlign="center" color="orange.600" mt="6">
-          Bem vindo a Metodologia Claire
-        </Heading>
-        <Text
-          textAlign="center"
-          mt="6"
-          fontSize="xl"
-          color="orange.600"
-          fontWeight="bold"
-        >
-          Clique no menu lateral para ver as aulas
-        </Text>
-        <Flex w="100%" direction="column" align="center">
-          {userRole === 'admin' ? (
-            <Button
-              mt="5"
-              bgColor="orange.300"
-              _hover={{
-                backgroundColor: 'orange.600',
-              }}
-              color="white"
-              w="30%"
+      <Flex
+        width="100%"
+        align="center"
+        justify="space-evenly"
+        direction="column"
+        px="20"
+      >
+        {tasks.length === 0 ? (
+          <Flex width="100%" mt="20" gap="8" h="100%">
+            <Box
+              width="50%"
+              height="100%"
+              display="flex"
+              flexDirection="column"
+              justifyContent="start"
             >
-              <Link href="/admin">Admin Page</Link>
-            </Button>
-          ) : (
-            ''
-          )}
-        </Flex>
+              <>
+                <Heading as="h2" fontSize="2xl" color="white">
+                  Ola {session.user.name}!!
+                </Heading>
+                <Text fontSize="xl" color="white" mt="4">
+                  Bem vindo ao Programa de desenvolvimento Claire
+                </Text>
+
+                <Text mt="4" fontSize="lg" color="white" fontWeight="bold">
+                  Como é seu primeiro acesso, clique no botão ao lado para
+                  encontrar o modulo que foi informado para você
+                </Text>
+              </>
+            </Box>
+            <Box width="50%">
+              <Button
+                bgColor="orange.600"
+                color="white"
+                w="100%"
+                h="100%"
+                _hover={{
+                  backgroundColor: 'orange.400',
+                }}
+                onClick={onOpen}
+              >
+                Clique aqui para abrir o catalogo de modulos
+              </Button>
+            </Box>
+          </Flex>
+        ) : (
+          <Flex width="100%" mt="20" gap="8" h="100%">
+            <Box
+              width="50%"
+              height="100%"
+              display="flex"
+              flexDirection="column"
+              justifyContent="start"
+            >
+              <Heading as="h2" fontSize="2xl" color="white">
+                Ola {session.user.name}!!
+              </Heading>
+              <Text fontSize="xl" color="white" mt="4">
+                Bem vindo de volta, você parou na aula:
+              </Text>
+
+              <Text mt="4" fontSize="xl" fontWeight="extrabold">
+                {lastTasksFinished}
+              </Text>
+            </Box>
+            <Box width="50%">
+              <Link href={`/day/${recentTask.checkBoxId}`}>
+                <Button
+                  bgColor="orange.600"
+                  color="white"
+                  w="100%"
+                  h="100%"
+                  _hover={{
+                    backgroundColor: 'orange.400',
+                  }}
+                >
+                  Clique aqui para voltar a essa aula
+                </Button>
+              </Link>
+            </Box>
+          </Flex>
+        )}
       </Flex>
-    </>
+    </Box>
   )
 }
 
 export async function getServerSideProps(context: any) {
   const session = await getSession(context)
-  // console.log(session)
   if (!session) {
     return {
       redirect: {
@@ -73,6 +132,24 @@ export async function getServerSideProps(context: any) {
     }
   }
 
+  const response = await api.get(`api/progress/list?id=${session?.user.id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${session.token}`,
+    },
+  })
+
+  let recentTask
+  if (response.data.length > 0) {
+    recentTask = response.data.reduce((previousTask: any, currentTask: any) => {
+      const previousTime = parseISO(previousTask.createdAt)
+      const currentTime = parseISO(currentTask.createdAt)
+      return isAfter(currentTime, previousTime) ? currentTask : previousTask
+    })
+  }
+
+  const query = `*[_id=="${recentTask.checkBoxId}"]`
+  const recentTaskData = await cms.fetch(query)
   try {
     const ids = await cms.fetch(`*[_type=="content"]`)
     const transformedData: any = {}
@@ -113,10 +190,12 @@ export async function getServerSideProps(context: any) {
       props: {
         contents: result,
         session,
+        recentTaskData,
+        recentTask,
       },
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return {
       props: { data: null },
       notFound: true,

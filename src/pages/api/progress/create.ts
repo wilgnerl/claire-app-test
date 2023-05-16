@@ -19,7 +19,7 @@ export default async function handler(
     try {
       res.status(200).json(createTask)
     } catch (err: any) {
-      console.log(err.message)
+      console.error(err.message)
       res.status(500).json({ ok: true })
     }
   } else {
