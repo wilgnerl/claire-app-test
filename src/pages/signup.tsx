@@ -68,7 +68,7 @@ export default function SignUp({ companies }: AdminProps) {
       gap="8"
     >
       <Center>
-        <VStack spacing={8} bgColor="orange.400" p="20" borderRadius="8">
+        <VStack spacing={8} bgColor="orange.600" p="20" borderRadius="8">
           <Flex direction="column" align="center" w="100%">
             <Heading fontSize="2xl" color="white">
               Bem vindo a Claire
