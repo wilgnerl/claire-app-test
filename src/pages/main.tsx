@@ -54,10 +54,10 @@ export default function Main({
             >
               <>
                 <Heading as="h2" fontSize="2xl" color="white">
-                  Ola {session.user.name}!!
+                  Olá {session.user.name}!!
                 </Heading>
                 <Text fontSize="xl" color="white" mt="4">
-                  Bem vindo ao Programa de desenvolvimento Claire
+                  Bem vindo(a) ao Programa de desenvolvimento Claire
                 </Text>
 
                 <Text mt="4" fontSize="lg" color="white" fontWeight="bold">
