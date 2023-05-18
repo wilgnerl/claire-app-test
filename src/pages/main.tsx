@@ -27,7 +27,9 @@ export default function Main({
   const { tasks } = useContext(ProgressContext)
   let lastTasksFinished = ''
   if (tasks.length > 0) {
-    lastTasksFinished = recentTaskData[0].WeekInfo[0].children[0].text
+    if (recentTaskData.lenght > 0) {
+      lastTasksFinished = recentTaskData[0].WeekInfo[0].children[0].text
+    }
   }
 
   return (
@@ -139,7 +141,8 @@ export async function getServerSideProps(context: any) {
     },
   })
 
-  let recentTask
+  let recentTask = null
+  let recentTaskData = null
   if (response.data.length > 0) {
     recentTask = response.data.reduce((previousTask: any, currentTask: any) => {
       const previousTime = parseISO(previousTask.createdAt)
@@ -147,9 +150,11 @@ export async function getServerSideProps(context: any) {
       return isAfter(currentTime, previousTime) ? currentTask : previousTask
     })
   }
+  if (recentTask) {
+    const query = `*[_id=="${recentTask.checkBoxId}"]`
+    recentTaskData = await cms.fetch(query)
+  }
 
-  const query = `*[_id=="${recentTask.checkBoxId}"]`
-  const recentTaskData = await cms.fetch(query)
   try {
     const ids = await cms.fetch(`*[_type=="content"]`)
     const transformedData: any = {}
