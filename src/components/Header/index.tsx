@@ -15,17 +15,17 @@ export default function Header({ onOpen, session }: HeaderProps) {
   return (
     <>
       <Flex
-        w="100%"
-        p="12"
         bgColor="orange.600"
         justify="space-between"
         align="center"
+        w="100%"
+        p="12"
       >
         <Flex>
           <IconButtonHeader isOpen={onOpen} />
           <Link href="/main">
-            <Container ml="8">
-              <Heading color="white" fontSize="3xl" fontWeight="light">
+            <Container>
+              <Heading color="white" fontSize="xl" fontWeight="light">
                 claire.
               </Heading>
               <Text color="white">Evite burnout e desengajamento</Text>
@@ -42,7 +42,6 @@ export default function Header({ onOpen, session }: HeaderProps) {
                 backgroundColor: 'orange.400',
               }}
               color="white"
-              w="3xs"
             >
               <Link href="/admin">Admin Page</Link>
             </Button>

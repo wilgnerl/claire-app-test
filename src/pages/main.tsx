@@ -3,8 +3,8 @@ import {
   Text,
   useDisclosure,
   Flex,
-  Box,
   Button,
+  useMediaQuery,
 } from '@chakra-ui/react'
 import { cms } from '@/lib/cms'
 import { getSession } from 'next-auth/react'
@@ -22,87 +22,41 @@ export default function Main({
   recentTaskData,
   recentTask,
 }: any) {
+  const [isLargerThan] = useMediaQuery('(min-width: 600px)')
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const { tasks } = useContext(ProgressContext)
+
   let lastTasksFinished = ''
   if (tasks.length > 0) {
-    if (recentTaskData.lenght > 0) {
-      lastTasksFinished = recentTaskData[0].WeekInfo[0].children[0].text
-    }
+    lastTasksFinished = recentTaskData[0].WeekInfo[0].children[0].text
   }
 
   return (
-    <Box width="100wh" height="100vh" bgColor="orange.300">
+    <Flex bgColor="orange.300" h="100vh" w="100wh" direction="column">
+      {/* <header> */}
       <Header onOpen={onOpen} session={session} />
       <DrawerItem isOpen={isOpen} onClose={onClose} contents={contents} />
-      <Flex
-        width="100%"
-        align="center"
-        justify="space-evenly"
-        direction="column"
-        px="20"
-      >
-        {tasks.length === 0 ? (
-          <Flex width="100%" mt="20" gap="8" h="100%">
-            <Box
-              width="50%"
-              height="100%"
-              display="flex"
-              flexDirection="column"
-              justifyContent="start"
-            >
-              <>
+      {/* </header> */}
+
+      {isLargerThan ? (
+        <Flex mt="10" align="center" justify="space-around" mx="10">
+          {tasks.length === 0 ? (
+            <>
+              <Flex width="50%" flexDirection="column" justify="start">
                 <Heading as="h2" fontSize="2xl" color="white">
                   Olá {session.user.name}!!
                 </Heading>
                 <Text fontSize="xl" color="white" mt="4">
                   Bem vindo(a) ao Programa de desenvolvimento Claire
                 </Text>
-
                 <Text mt="4" fontSize="lg" color="white" fontWeight="bold">
                   Como é seu primeiro acesso, clique no botão ao lado para
                   encontrar o modulo que foi informado para você
                 </Text>
-              </>
-            </Box>
-            <Box width="50%">
-              <Button
-                bgColor="orange.600"
-                color="white"
-                w="100%"
-                h="100%"
-                _hover={{
-                  backgroundColor: 'orange.400',
-                }}
-                onClick={onOpen}
-              >
-                Clique aqui para abrir o catalogo de modulos
-              </Button>
-            </Box>
-          </Flex>
-        ) : (
-          <Flex width="100%" mt="20" gap="8" h="100%">
-            <Box
-              width="50%"
-              height="100%"
-              display="flex"
-              flexDirection="column"
-              justifyContent="start"
-            >
-              <Heading as="h2" fontSize="2xl" color="white">
-                Ola {session.user.name}!!
-              </Heading>
-              <Text fontSize="xl" color="white" mt="4">
-                Bem vindo de volta, você parou na aula:
-              </Text>
+              </Flex>
 
-              <Text mt="4" fontSize="xl" fontWeight="extrabold">
-                {lastTasksFinished}
-              </Text>
-            </Box>
-            <Box width="50%">
-              <Link href={`/day/${recentTask.checkBoxId}`}>
+              <Flex width="50%" justify="center">
                 <Button
                   bgColor="orange.600"
                   color="white"
@@ -111,15 +65,121 @@ export default function Main({
                   _hover={{
                     backgroundColor: 'orange.400',
                   }}
+                  onClick={onOpen}
                 >
-                  Clique aqui para voltar a essa aula
+                  Clique aqui para abrir o catalogo de modulos
                 </Button>
-              </Link>
-            </Box>
-          </Flex>
-        )}
-      </Flex>
-    </Box>
+              </Flex>
+            </>
+          ) : (
+            <>
+              <Flex
+                width="50%"
+                display="flex"
+                flexDirection="column"
+                justify="center"
+              >
+                <Heading as="h2" fontSize="2xl" color="white">
+                  Ola {session.user.name}!!
+                </Heading>
+                <Text fontSize="xl" color="white" mt="4">
+                  Bem vindo de volta, você parou na aula:
+                </Text>
+
+                <Text mt="4" fontSize="xl" fontWeight="extrabold">
+                  {JSON.stringify(lastTasksFinished)}
+                </Text>
+              </Flex>
+              {/* <Flex width="50%" justify="center" h="100%" wrap="nowrap"> */}
+              <Button
+                bgColor="orange.600"
+                color="white"
+                // w="100%"
+                h="100%"
+                _hover={{
+                  backgroundColor: 'orange.400',
+                }}
+              >
+                {/* <Link href={`/day/${recentTask.checkBoxId}`}> */}
+                <Flex wrap="wrap">Clique aqui para voltar a essa aula</Flex>
+                {/* </Link> */}
+              </Button>
+              {/* </Flex> */}
+            </>
+          )}
+        </Flex>
+      ) : (
+        <Flex
+          my="10"
+          align="center"
+          justify="space-around"
+          mx="10"
+          direction="column"
+          height="50%"
+        >
+          {tasks.length === 0 ? (
+            <>
+              <Flex flexDirection="column">
+                <Heading as="h2" fontSize="2xl" color="white">
+                  Olá {session.user.name}!!
+                </Heading>
+                <Text fontSize="xl" color="white" mt="4">
+                  Bem vindo(a) ao Programa de desenvolvimento Claire
+                </Text>
+                <Text mt="4" fontSize="lg" color="white" fontWeight="bold">
+                  Como é seu primeiro acesso, clique no botão ao lado para
+                  encontrar o modulo que foi informado para você
+                </Text>
+              </Flex>
+
+              <Flex width="50%" justify="center">
+                <Button
+                  bgColor="orange.600"
+                  color="white"
+                  w="100%"
+                  h="100%"
+                  _hover={{
+                    backgroundColor: 'orange.400',
+                  }}
+                  onClick={onOpen}
+                >
+                  Clique aqui para abrir o catalogo de modulos
+                </Button>
+              </Flex>
+            </>
+          ) : (
+            <>
+              <Flex flexDirection="column">
+                <Heading as="h2" fontSize="2xl" color="white">
+                  Ola {session.user.name}!!
+                </Heading>
+                <Text fontSize="xl" color="white" mt="4">
+                  Bem vindo de volta, você parou na aula:
+                </Text>
+
+                <Text mt="4" fontSize="xl" fontWeight="extrabold">
+                  {JSON.stringify(lastTasksFinished)}
+                </Text>
+              </Flex>
+              <Button
+                bgColor="orange.600"
+                color="white"
+                w="100%"
+                h="100%"
+                _hover={{
+                  backgroundColor: 'orange.400',
+                }}
+                mt="10"
+              >
+                <Link href={`/day/${recentTask.checkBoxId}`}>
+                  Clique aqui para voltar a essa aula
+                </Link>
+              </Button>
+            </>
+          )}
+        </Flex>
+      )}
+    </Flex>
   )
 }
 
@@ -150,7 +210,7 @@ export async function getServerSideProps(context: any) {
       return isAfter(currentTime, previousTime) ? currentTask : previousTask
     })
   }
-  if (recentTask) {
+  if (recentTask !== null) {
     const query = `*[_id=="${recentTask.checkBoxId}"]`
     recentTaskData = await cms.fetch(query)
   }

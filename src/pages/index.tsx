@@ -12,7 +12,6 @@ import {
   Input,
   Stack,
   Text,
-  VStack,
 } from '@chakra-ui/react'
 import { getSession, signIn } from 'next-auth/react'
 import Link from 'next/link'
@@ -47,21 +46,25 @@ export default function Home({ ids }: any) {
       align="center"
       direction="column"
     >
-      <VStack spacing={6} bgColor="orange.600" p="20" borderRadius="8">
-        <Flex direction="column" align="center">
-          {/* <Stack spacing="2"> */}
+      <Flex
+        bgColor="orange.600"
+        px="20"
+        pb="20"
+        borderRadius="8"
+        // w="100%"
+        direction="column"
+      >
+        <Flex direction="column" align="center" mt="10" mb="2">
           <Heading fontSize="2xl" color="white">
             Programa de desenvolvimento Claire
           </Heading>
-          <Text fontSize="xl" color="white" fontWeight="bold" mt="2">
+          <Text fontSize="xl" color="white" fontWeight="bold">
             Faça seu login
           </Text>
-          {/* </Stack> */}
         </Flex>
-
-        <Card bgColor="white">
-          <CardBody w="sm">
-            <Stack spacing="5">
+        <Flex direction="column" align="center" mt="2" mx="2">
+          <Card bgColor="white">
+            <CardBody>
               <form onSubmit={handleSubmit}>
                 <FormControl isRequired>
                   <FormLabel htmlFor="email">Email</FormLabel>
@@ -93,7 +96,6 @@ export default function Home({ ids }: any) {
                       backgroundColor: 'orange.400',
                     }}
                     type="submit"
-                    // onClick={() => signIn()}
                   >
                     Login
                   </Button>
@@ -116,10 +118,11 @@ export default function Home({ ids }: any) {
                   </Button>
                 </Stack>
               </form>
-            </Stack>
-          </CardBody>
-        </Card>
-      </VStack>
+              {/* </Stack> */}
+            </CardBody>
+          </Card>
+        </Flex>
+      </Flex>
     </Flex>
   )
 }

@@ -9,8 +9,7 @@ export default function IconButtonHeader({ isOpen }: any) {
         bgColor="transparent"
         color="white"
         variant="solid"
-        fontSize="30px"
-        ml="16"
+        fontSize="30"
         colorScheme="teal"
         onClick={isOpen}
       >
