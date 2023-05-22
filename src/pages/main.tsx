@@ -58,7 +58,6 @@ export default function Main({
               <Button
                 bgColor="orange.600"
                 color="white"
-                // w="100%"
                 h="100%"
                 _hover={{
                   backgroundColor: 'orange.400',
