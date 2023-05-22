@@ -14,20 +14,25 @@ export default async function handler(
 
     const hashed = await hash(password, salt)
 
-    const createCompany = await prisma.user.create({
-      data: {
-        name,
-        companyId,
-        email,
-        password: hashed,
-      },
-    })
-
     try {
+      const createCompany = await prisma.user.create({
+        data: {
+          name,
+          companyId,
+          email,
+          password: hashed,
+        },
+      })
+
       res.status(200).json(createCompany)
     } catch (err) {
       console.error(err)
-      res.status(500).json({ erro: true })
+      // Rollback the user creation by deleting the user
+      await prisma.user.delete({
+        where: { email }, // Provide the necessary condition to identify the user to delete
+      })
+
+      res.status(500).json({ error: true, message: 'Failed to create user.' })
     }
   } else {
     // Handle any other HTTP method

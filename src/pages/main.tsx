@@ -55,20 +55,19 @@ export default function Main({
                 </Text>
               </Flex>
 
-              <Flex width="50%" justify="center">
-                <Button
-                  bgColor="orange.600"
-                  color="white"
-                  w="100%"
-                  h="100%"
-                  _hover={{
-                    backgroundColor: 'orange.400',
-                  }}
-                  onClick={onOpen}
-                >
-                  Clique aqui para abrir o catalogo de modulos
-                </Button>
-              </Flex>
+              <Button
+                bgColor="orange.600"
+                color="white"
+                // w="100%"
+                h="100%"
+                _hover={{
+                  backgroundColor: 'orange.400',
+                }}
+                onClick={onOpen}
+                mt="10"
+              >
+                Clique aqui para abrir o catalogo de modulos
+              </Button>
             </>
           ) : (
             <>
@@ -99,6 +98,7 @@ export default function Main({
                   _hover={{
                     backgroundColor: 'orange.400',
                   }}
+                  mt="10"
                 >
                   <Flex wrap="wrap">Clique aqui para voltar a essa aula</Flex>
                 </Button>
@@ -131,20 +131,18 @@ export default function Main({
                 </Text>
               </Flex>
 
-              <Flex width="50%" justify="center">
-                <Button
-                  bgColor="orange.600"
-                  color="white"
-                  w="100%"
-                  h="100%"
-                  _hover={{
-                    backgroundColor: 'orange.400',
-                  }}
-                  onClick={onOpen}
-                >
-                  Clique aqui para abrir o catalogo de modulos
-                </Button>
-              </Flex>
+              <Button
+                bgColor="orange.600"
+                color="white"
+                h="100%"
+                _hover={{
+                  backgroundColor: 'orange.400',
+                }}
+                onClick={onOpen}
+                mt="10"
+              >
+                Clique aqui para abrir o catalogo de modulos
+              </Button>
             </>
           ) : (
             <>
