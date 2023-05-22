@@ -5,6 +5,7 @@ import {
   Flex,
   Button,
   useMediaQuery,
+  Link,
 } from '@chakra-ui/react'
 import { cms } from '@/lib/cms'
 import { getSession } from 'next-auth/react'
@@ -14,7 +15,7 @@ import { useContext } from 'react'
 import { ProgressContext } from '@/context/ProgressContext'
 import { parseISO, isAfter } from 'date-fns'
 import { api } from '@/lib/axios'
-import Link from 'next/link'
+import NextLink from 'next/link'
 
 export default function Main({
   contents,
@@ -34,10 +35,8 @@ export default function Main({
 
   return (
     <Flex bgColor="orange.300" h="100vh" w="100wh" direction="column">
-      {/* <header> */}
       <Header onOpen={onOpen} session={session} />
       <DrawerItem isOpen={isOpen} onClose={onClose} contents={contents} />
-      {/* </header> */}
 
       {isLargerThan ? (
         <Flex mt="10" align="center" justify="space-around" mx="10">
@@ -56,20 +55,19 @@ export default function Main({
                 </Text>
               </Flex>
 
-              <Flex width="50%" justify="center">
-                <Button
-                  bgColor="orange.600"
-                  color="white"
-                  w="100%"
-                  h="100%"
-                  _hover={{
-                    backgroundColor: 'orange.400',
-                  }}
-                  onClick={onOpen}
-                >
-                  Clique aqui para abrir o catalogo de modulos
-                </Button>
-              </Flex>
+              <Button
+                bgColor="orange.600"
+                color="white"
+                // w="100%"
+                h="100%"
+                _hover={{
+                  backgroundColor: 'orange.400',
+                }}
+                onClick={onOpen}
+                mt="10"
+              >
+                Clique aqui para abrir o catalogo de modulos
+              </Button>
             </>
           ) : (
             <>
@@ -91,19 +89,20 @@ export default function Main({
                 </Text>
               </Flex>
               {/* <Flex width="50%" justify="center" h="100%" wrap="nowrap"> */}
-              <Button
-                bgColor="orange.600"
-                color="white"
-                // w="100%"
-                h="100%"
-                _hover={{
-                  backgroundColor: 'orange.400',
-                }}
-              >
-                {/* <Link href={`/day/${recentTask.checkBoxId}`}> */}
-                <Flex wrap="wrap">Clique aqui para voltar a essa aula</Flex>
-                {/* </Link> */}
-              </Button>
+              <Link as={NextLink} href={`/day/${recentTask.checkBoxId}`}>
+                <Button
+                  bgColor="orange.600"
+                  color="white"
+                  // w="100%"
+                  h="100%"
+                  _hover={{
+                    backgroundColor: 'orange.400',
+                  }}
+                  mt="10"
+                >
+                  <Flex wrap="wrap">Clique aqui para voltar a essa aula</Flex>
+                </Button>
+              </Link>
               {/* </Flex> */}
             </>
           )}
@@ -132,20 +131,18 @@ export default function Main({
                 </Text>
               </Flex>
 
-              <Flex width="50%" justify="center">
-                <Button
-                  bgColor="orange.600"
-                  color="white"
-                  w="100%"
-                  h="100%"
-                  _hover={{
-                    backgroundColor: 'orange.400',
-                  }}
-                  onClick={onOpen}
-                >
-                  Clique aqui para abrir o catalogo de modulos
-                </Button>
-              </Flex>
+              <Button
+                bgColor="orange.600"
+                color="white"
+                h="100%"
+                _hover={{
+                  backgroundColor: 'orange.400',
+                }}
+                onClick={onOpen}
+                mt="10"
+              >
+                Clique aqui para abrir o catalogo de modulos
+              </Button>
             </>
           ) : (
             <>
@@ -171,7 +168,7 @@ export default function Main({
                 }}
                 mt="10"
               >
-                <Link href={`/day/${recentTask.checkBoxId}`}>
+                <Link as={NextLink} href={`/day/${recentTask.checkBoxId}`}>
                   Clique aqui para voltar a essa aula
                 </Link>
               </Button>
