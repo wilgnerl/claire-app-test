@@ -4,7 +4,6 @@ import {
   Button,
   Card,
   CardBody,
-  Center,
   Flex,
   FormControl,
   FormLabel,
@@ -13,7 +12,6 @@ import {
   Select,
   Stack,
   Text,
-  VStack,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
@@ -65,19 +63,26 @@ export default function SignUp({ companies }: AdminProps) {
       w="100wh"
       height="100vh"
       justify="center"
-      gap="8"
+      align="center"
+      direction="column"
     >
-      <Center>
-        <VStack spacing={8} bgColor="orange.600" p="20" borderRadius="8">
-          <Flex direction="column" align="center" w="100%">
-            <Heading fontSize="2xl" color="white">
-              Bem vindo a Claire
-            </Heading>
-            <Text fontSize="xl" color="white" fontWeight="bold">
-              Crie sua conta
-            </Text>
-          </Flex>
-
+      <Flex
+        bgColor="orange.600"
+        px="20"
+        pb="20"
+        borderRadius="8"
+        w="100%"
+        direction="column"
+      >
+        <Flex direction="column" align="center" mt="10" mb="2">
+          <Heading fontSize="2xl" color="white">
+            Bem vindo a Claire
+          </Heading>
+          <Text fontSize="xl" color="white" fontWeight="bold">
+            Crie sua conta
+          </Text>
+        </Flex>
+        <Flex direction="column" align="center" mt="2" mx="2">
           <Card bgColor="white" align="center">
             <CardBody w="sm">
               <form onSubmit={handleSubmit}>
@@ -142,8 +147,8 @@ export default function SignUp({ companies }: AdminProps) {
               </form>
             </CardBody>
           </Card>
-        </VStack>
-      </Center>
+        </Flex>
+      </Flex>
     </Flex>
   )
 }
