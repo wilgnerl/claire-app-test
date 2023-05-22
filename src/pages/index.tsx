@@ -51,7 +51,7 @@ export default function Home({ ids }: any) {
         px="20"
         pb="20"
         borderRadius="8"
-        // w="100%"
+        w="100%"
         direction="column"
       >
         <Flex direction="column" align="center" mt="10" mb="2">
@@ -64,7 +64,7 @@ export default function Home({ ids }: any) {
         </Flex>
         <Flex direction="column" align="center" mt="2" mx="2">
           <Card bgColor="white">
-            <CardBody>
+            <CardBody w="sm">
               <form onSubmit={handleSubmit}>
                 <FormControl isRequired>
                   <FormLabel htmlFor="email">Email</FormLabel>
