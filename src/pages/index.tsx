@@ -118,7 +118,6 @@ export default function Home({ ids }: any) {
                   </Button>
                 </Stack>
               </form>
-              {/* </Stack> */}
             </CardBody>
           </Card>
         </Flex>
